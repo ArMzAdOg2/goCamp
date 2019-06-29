@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"net/http"
 	"os"
-
+	"github.com/ArMzAdOg2/goCamp/router"
 	"github.com/gin-gonic/gin"
 	_ "github.com/lib/pq"
 )
@@ -24,6 +24,7 @@ type todo struct {
 var todos = []todo{}
 
 func getStudentHandler(c *gin.Context) {
+	r := router:SetupRouter()
 	c.JSON(200, "OK")
 }
 
