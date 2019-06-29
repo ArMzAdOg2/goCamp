@@ -6,7 +6,6 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/ArMzAdOg2/Router"
 	"github.com/gin-gonic/gin"
 	_ "github.com/lib/pq"
 )
@@ -25,7 +24,6 @@ type todo struct {
 var todos = []todo{}
 
 func getStudentHandler(c *gin.Context) {
-	r := Router.SetupRouter()
 	c.JSON(200, "OK")
 }
 
@@ -162,8 +160,15 @@ func setupRouter() *gin.Engine {
 
 	r.Use(func(c *gin.Context) {
 		fmt.Println("hello")
-		c.Next()
 		token := c.GetHeader("Authorization")
+		fmt.Println(token)
+		if token != "Bearer 123" {
+			c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{
+				"error": "Wrong token",
+			})
+			return
+		}
+		c.Next()
 		fmt.Println("token :", token)
 		fmt.Println("Goodbye!")
 	})

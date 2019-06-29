@@ -1,4 +1,4 @@
-module "github.com/ArMzAdOg2"
+module github.com/ArMzAdOg2/school
 
 go 1.12
 
