@@ -1,9 +1,19 @@
 package Router
 
-import "github.com/gin-gonic/gin"
+import (
+	"fmt"
 
-func setupRouter() *gin.Engine {
+	"github.com/gin-gonic/gin"
+)
+
+func SetupRouter() *gin.Engine {
 	r := gin.Default()
+
+	r.Use(func(c *gin.Context) {
+		fmt.Println("hello")
+		c.Next()
+		fmt.Println("Goodbye!")
+	})
 	r.GET("/api/todos", getTodos)
 	r.GET("/api/todos/:id", getTodosByIDHandler)
 	r.POST("/api/todos", postTodoHandler)

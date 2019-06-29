@@ -2,9 +2,11 @@ package main
 
 import (
 	"database/sql"
+	"fmt"
 	"net/http"
 	"os"
 
+	"github.com/ArMzAdOg2/Router"
 	"github.com/gin-gonic/gin"
 	_ "github.com/lib/pq"
 )
@@ -23,6 +25,7 @@ type todo struct {
 var todos = []todo{}
 
 func getStudentHandler(c *gin.Context) {
+	r := Router.SetupRouter()
 	c.JSON(200, "OK")
 }
 
@@ -156,6 +159,14 @@ func main() {
 
 func setupRouter() *gin.Engine {
 	r := gin.Default()
+
+	r.Use(func(c *gin.Context) {
+		fmt.Println("hello")
+		c.Next()
+		token := c.GetHeader("Authorization")
+		fmt.Println("token :", token)
+		fmt.Println("Goodbye!")
+	})
 	r.GET("/api/todos", getTodos)
 	r.GET("/api/todos/:id", getTodosByIDHandler)
 	r.POST("/api/todos", postTodoHandler)
